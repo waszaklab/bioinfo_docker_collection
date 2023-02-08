@@ -3,7 +3,7 @@ FROM conda/miniconda3
 LABEL author="Kersten Breuer, Zeller Team, EMBL 2018" \
     maintainer="kersten-breuer@outlook.com"
 
-ENV PHANTOMPEAKQUALTOOLS_VERSION 1.2
+ENV PHANTOMPEAKQUALTOOLS_VERSION 1.2.2
 
 # install needed unix packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -42,7 +42,8 @@ RUN cd /usr/bin \
 	&& chmod 777 /usr/bin/phantompeakqualtools-${PHANTOMPEAKQUALTOOLS_VERSION}/run_spp.R
 
 # install all needed R packages:
-RUN conda install -c bioconda -c conda-forge \
+RUN conda install -n base -c conda-forge mamba
+RUN mamba install -c bioconda -c conda-forge \
 	r-snow \
 	r-bitops \
 	r-caTools \
@@ -50,17 +51,4 @@ RUN conda install -c bioconda -c conda-forge \
 	phantompeakqualtools==${PHANTOMPEAKQUALTOOLS_VERSION}
 
 ENV PATH=/usr/bin/samtools-1.5/:/usr/bin/phantompeakqualtools-${PHANTOMPEAKQUALTOOLS_VERSION}/:${PATH}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
